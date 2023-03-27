@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package unary;
+
+message IsAllowedRequest {
+  string name = 1;
+}
+
+message IsAllowedReply {
+  bool isAllowed = 1;
+}
+
+
+service IsAllowedService {
+  rpc send(IsAllowedRequest) returns (IsAllowedReply){}
+}
