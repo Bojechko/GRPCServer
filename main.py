@@ -12,7 +12,6 @@ class IsAllowedService(pb2_grpc.IsAllowedServiceServicer):
 
     def send(self, request, context):
         logins = {1: 'admin', 2: 'andrey'}
-        print("request.name")
         result = {'isAllowed': self.CheckName(request.name, logins)}
 
         return pb2.IsAllowedReply(**result)
