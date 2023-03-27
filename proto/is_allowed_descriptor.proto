@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package unary;
+package com.example.nanay.gRPCServer;
 
 message IsAllowedRequest {
   string name = 1;

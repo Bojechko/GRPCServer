@@ -1,17 +1,18 @@
 import grpc
 from concurrent import futures
-from proto import IsAllowed_pb2 as pb2, IsAllowed_pb2_grpc as pb2_grpc
+from proto import is_allowed_descriptor_pb2 as pb2, is_allowed_descriptor_pb2_grpc as pb2_grpc
+from proto.is_allowed_descriptor_pb2_grpc import IsAllowedService
 
 
-class UnaryService(pb2_grpc.UnaryServicer):
+class IsAllowedService(pb2_grpc.IsAllowedServiceServicer):
 
     def __init__(self, *args, **kwargs):
         pass
 
 
-    def GetServerResponse(self, request, context):
+    def send(self, request, context):
         logins = {1: 'admin', 2: 'andrey'}
-        print(request.name)
+        print("request.name")
         result = {'isAllowed': self.CheckName(request.name, logins)}
 
         return pb2.IsAllowedReply(**result)
@@ -29,8 +30,9 @@ class UnaryService(pb2_grpc.UnaryServicer):
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    pb2_grpc.add_UnaryServicer_to_server(UnaryService(), server)
+    pb2_grpc.add_IsAllowedServiceServicer_to_server(IsAllowedService(), server)
     server.add_insecure_port('[::]:50051')
+
     server.start()
     server.wait_for_termination()
 
